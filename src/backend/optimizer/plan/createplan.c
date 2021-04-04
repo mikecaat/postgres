@@ -2831,7 +2831,8 @@ create_limit_plan(PlannerInfo *root, LimitPath *best_path, int flags)
  *	 Returns a seqscan plan for the base relation scanned by 'best_path'
  *	 with restriction clauses 'scan_clauses' and targetlist 'tlist'.
  */
-static SeqScan *
+static SeqScan *				/* TODO: implements lazy clauses for another
+								 * plan, for example indexscan. */
 create_seqscan_plan(PlannerInfo *root, Path *best_path,
 					List *tlist, List *scan_clauses)
 {
@@ -2858,6 +2859,9 @@ create_seqscan_plan(PlannerInfo *root, Path *best_path,
 	scan_plan = make_seqscan(tlist,
 							 scan_clauses,
 							 scan_relid);
+
+	/* consider lazy clauses */
+	scan_plan->plan.lazy = root->parse->lazy;
 
 	copy_generic_path_info(&scan_plan->plan, best_path);
 

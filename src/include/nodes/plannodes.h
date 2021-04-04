@@ -144,6 +144,7 @@ typedef struct Plan
 	struct Plan *righttree;
 	List	   *initPlan;		/* Init Plan nodes (un-correlated expr
 								 * subselects) */
+	bool		lazy;			/* Is is ok the executor is lazy? */
 
 	/*
 	 * Information for management of parameter-change-driven rescanning

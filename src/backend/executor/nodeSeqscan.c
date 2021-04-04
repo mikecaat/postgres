@@ -53,6 +53,9 @@ SeqNext(SeqScanState *node)
 	EState	   *estate;
 	ScanDirection direction;
 	TupleTableSlot *slot;
+	bool		lazy;
+	static const double lazy_p = 0.1;	/* the lazy executor have a 10% chance
+										 * of skipping */
 
 	/*
 	 * get information from the estate and scan state
@@ -61,6 +64,14 @@ SeqNext(SeqScanState *node)
 	estate = node->ss.ps.state;
 	direction = estate->es_direction;
 	slot = node->ss.ss_ScanTupleSlot;
+	lazy = node->ss.ps.plan->lazy;
+
+	/* the executor maybe be lazy */
+	if (lazy && random() <= lazy_p * MAX_RANDOM_VALUE)
+	{
+		/* I'm tired. Let's finish it. */
+		return NULL;
+	}
 
 	if (scandesc == NULL)
 	{
@@ -170,6 +181,9 @@ ExecInitSeqScan(SeqScan *node, EState *estate, int eflags)
 	 */
 	scanstate->ss.ps.qual =
 		ExecInitQual(node->plan.qual, (PlanState *) scanstate);
+
+	/* Initialize random seed */
+	srandom((unsigned int) time(NULL));
 
 	return scanstate;
 }

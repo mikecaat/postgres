@@ -181,6 +181,8 @@ typedef struct Query
 	List	   *withCheckOptions;	/* a list of WithCheckOption's (added
 									 * during rewrite) */
 
+	bool		lazy;			/* Is it ok the executor is lazy? */
+
 	/*
 	 * The following two fields identify the portion of the source text string
 	 * containing this query.  They are typically only populated in top-level
@@ -1651,6 +1653,7 @@ typedef struct SelectStmt
 	bool		groupDistinct;	/* Is this GROUP BY DISTINCT? */
 	Node	   *havingClause;	/* HAVING conditional-expression */
 	List	   *windowClause;	/* WINDOW window_name AS (...), ... */
+	bool		lazy;			/* Is is ok that the executor is lazy? */
 
 	/*
 	 * In a "leaf" node representing a VALUES list, the above fields are all

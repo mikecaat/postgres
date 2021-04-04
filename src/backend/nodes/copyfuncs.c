@@ -127,6 +127,7 @@ CopyPlanFields(const Plan *from, Plan *newnode)
 	COPY_NODE_FIELD(lefttree);
 	COPY_NODE_FIELD(righttree);
 	COPY_NODE_FIELD(initPlan);
+	COPY_SCALAR_FIELD(lazy);
 	COPY_BITMAPSET_FIELD(extParam);
 	COPY_BITMAPSET_FIELD(allParam);
 }
@@ -3192,6 +3193,7 @@ _copyQuery(const Query *from)
 	COPY_NODE_FIELD(setOperations);
 	COPY_NODE_FIELD(constraintDeps);
 	COPY_NODE_FIELD(withCheckOptions);
+	COPY_SCALAR_FIELD(lazy);
 	COPY_LOCATION_FIELD(stmt_location);
 	COPY_SCALAR_FIELD(stmt_len);
 

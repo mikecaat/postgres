@@ -1560,9 +1560,9 @@ ExplainNode(PlanState *planstate, List *ancestors,
 	{
 		if (es->format == EXPLAIN_FORMAT_TEXT)
 		{
-			appendStringInfo(es->str, "  (cost=%.2f..%.2f rows=%.0f width=%d)",
+			appendStringInfo(es->str, "  (cost=%.2f..%.2f rows=%.0f width=%d lazy=%s)",
 							 plan->startup_cost, plan->total_cost,
-							 plan->plan_rows, plan->plan_width);
+							 plan->plan_rows, plan->plan_width, plan->lazy ? "true" : "false");
 		}
 		else
 		{
@@ -1574,6 +1574,7 @@ ExplainNode(PlanState *planstate, List *ancestors,
 								 0, es);
 			ExplainPropertyInteger("Plan Width", NULL, plan->plan_width,
 								   es);
+			ExplainPropertyText("Lazy", plan->lazy ? "true" : "false", es);
 		}
 	}
 

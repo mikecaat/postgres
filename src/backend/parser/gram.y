@@ -465,7 +465,7 @@ static Node *makeRecursiveViewSelect(char *relname, List *aliases, Node *query);
 %type <str>		unicode_normal_form
 
 %type <boolean> opt_instead
-%type <boolean> opt_unique opt_concurrently opt_verbose opt_full
+%type <boolean> opt_unique opt_concurrently opt_verbose opt_full opt_lazy
 %type <boolean> opt_freeze opt_analyze opt_default opt_recheck
 %type <defelt>	opt_binary copy_delimiter
 
@@ -676,7 +676,7 @@ static Node *makeRecursiveViewSelect(char *relname, List *aliases, Node *query);
 
 	KEY
 
-	LABEL LANGUAGE LARGE_P LAST_P LATERAL_P
+	LABEL LANGUAGE LARGE_P LAST_P LATERAL_P LAZY
 	LEADING LEAKPROOF LEAST LEFT LEVEL LIKE LIMIT LISTEN LOAD LOCAL
 	LOCALTIME LOCALTIMESTAMP LOCATION LOCK_P LOCKED LOGGED
 
@@ -7368,6 +7368,11 @@ opt_unique:
 			| /*EMPTY*/								{ $$ = false; }
 		;
 
+opt_lazy:
+			LAZY									{ $$ = true; }
+			| /* EMPTY */							{ $$ = false; }
+		;
+
 opt_concurrently:
 			CONCURRENTLY							{ $$ = true; }
 			| /*EMPTY*/								{ $$ = false; }
@@ -11363,35 +11368,37 @@ select_clause:
  * However, this is not checked by the grammar; parse analysis must check it.
  */
 simple_select:
-			SELECT opt_all_clause opt_target_list
+			opt_lazy SELECT opt_all_clause opt_target_list
 			into_clause from_clause where_clause
 			group_clause having_clause window_clause
 				{
 					SelectStmt *n = makeNode(SelectStmt);
-					n->targetList = $3;
-					n->intoClause = $4;
-					n->fromClause = $5;
-					n->whereClause = $6;
-					n->groupClause = ($7)->list;
-					n->groupDistinct = ($7)->distinct;
-					n->havingClause = $8;
-					n->windowClause = $9;
+					n->lazy = $1;
+					n->targetList = $4;
+					n->intoClause = $5;
+					n->fromClause = $6;
+					n->whereClause = $7;
+					n->groupClause = ($8)->list;
+					n->groupDistinct = ($8)->distinct;
+					n->havingClause = $9;
+					n->windowClause = $10;
 					$$ = (Node *)n;
 				}
-			| SELECT distinct_clause target_list
+			| opt_lazy SELECT distinct_clause target_list
 			into_clause from_clause where_clause
 			group_clause having_clause window_clause
 				{
 					SelectStmt *n = makeNode(SelectStmt);
-					n->distinctClause = $2;
-					n->targetList = $3;
-					n->intoClause = $4;
-					n->fromClause = $5;
-					n->whereClause = $6;
-					n->groupClause = ($7)->list;
-					n->groupDistinct = ($7)->distinct;
-					n->havingClause = $8;
-					n->windowClause = $9;
+					n->lazy = $1;
+					n->distinctClause = $3;
+					n->targetList = $4;
+					n->intoClause = $5;
+					n->fromClause = $6;
+					n->whereClause = $7;
+					n->groupClause = ($8)->list;
+					n->groupDistinct = ($8)->distinct;
+					n->havingClause = $9;
+					n->windowClause = $10;
 					$$ = (Node *)n;
 				}
 			| values_clause							{ $$ = $1; }
@@ -15849,6 +15856,7 @@ reserved_keyword:
 			| INTERSECT
 			| INTO
 			| LATERAL_P
+			| LAZY
 			| LEADING
 			| LIMIT
 			| LOCALTIME
@@ -16082,6 +16090,7 @@ bare_label_keyword:
 			| LARGE_P
 			| LAST_P
 			| LATERAL_P
+			| LAZY
 			| LEADING
 			| LEAKPROOF
 			| LEAST
