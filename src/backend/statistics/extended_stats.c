@@ -91,9 +91,9 @@ typedef struct AnlExprData
 } AnlExprData;
 
 static void compute_expr_stats(Relation onerel, double totalrows,
-							   AnlExprData * exprdata, int nexprs,
+							   AnlExprData *exprdata, int nexprs,
 							   HeapTuple *rows, int numrows);
-static Datum serialize_expr_stats(AnlExprData * exprdata, int nexprs);
+static Datum serialize_expr_stats(AnlExprData *exprdata, int nexprs);
 static Datum expr_fetch_func(VacAttrStatsP stats, int rownum, bool *isNull);
 static AnlExprData *build_expr_data(List *exprs, int stattarget);
 
@@ -539,9 +539,9 @@ examine_attribute(Node *expr)
 
 	/*
 	 * When analyzing an expression, believe the expression tree's type not
-	 * the column datatype --- the latter might be the opckeytype storage
-	 * type of the opclass, which is not interesting for our purposes.  (Note:
-	 * if we did anything with non-expression statistics columns, we'd need to
+	 * the column datatype --- the latter might be the opckeytype storage type
+	 * of the opclass, which is not interesting for our purposes.  (Note: if
+	 * we did anything with non-expression statistics columns, we'd need to
 	 * figure out where to get the correct type info from, but for now that's
 	 * not a problem.)	It's not clear whether anyone will care about the
 	 * typmod, but we store that too just in case.

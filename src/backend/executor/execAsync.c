@@ -94,7 +94,7 @@ ExecAsyncResponse(AsyncRequest *areq)
 		default:
 			/* If the node doesn't support async, caller messed up. */
 			elog(ERROR, "unrecognized node type: %d",
-				(int) nodeTag(areq->requestor));
+				 (int) nodeTag(areq->requestor));
 	}
 }
 

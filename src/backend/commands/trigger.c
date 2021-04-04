@@ -4354,7 +4354,7 @@ GetAfterTriggersStoreSlot(AfterTriggersTableData *table,
 	/* Create it if not already done. */
 	if (!table->storeslot)
 	{
-		MemoryContext	oldcxt;
+		MemoryContext oldcxt;
 
 		/*
 		 * We only need this slot only until AfterTriggerEndQuery, but making

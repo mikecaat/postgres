@@ -5775,7 +5775,7 @@ do_start_bgworker(RegisteredBgWorker *rw)
 
 	ereport(DEBUG1,
 			(errmsg_internal("starting background worker process \"%s\"",
-					rw->rw_worker.bgw_name)));
+							 rw->rw_worker.bgw_name)));
 
 #ifdef EXEC_BACKEND
 	switch ((worker_pid = bgworker_forkexec(rw->rw_shmem_slot)))

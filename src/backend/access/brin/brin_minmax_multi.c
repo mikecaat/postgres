@@ -114,7 +114,7 @@ typedef struct MinmaxMultiOpaque
 	bool		extra_proc_missing[MINMAX_MAX_PROCNUMS];
 	Oid			cached_subtype;
 	FmgrInfo	strategy_procinfos[BTMaxStrategyNumber];
-}			MinmaxMultiOpaque;
+} MinmaxMultiOpaque;
 
 /*
  * Storage type for BRIN's minmax reloptions
@@ -261,7 +261,7 @@ typedef struct compare_context
 {
 	FmgrInfo   *cmpFn;
 	Oid			colloid;
-}			compare_context;
+} compare_context;
 
 static int	compare_values(const void *a, const void *b, void *arg);
 
@@ -670,11 +670,11 @@ range_serialize(Ranges *range)
 			/*
 			 * For values passed by value, we need to copy just the
 			 * significant bytes - we can't use memcpy directly, as that
-			 * assumes little endian behavior.  store_att_byval does
-			 * almost what we need, but it requires properly aligned
-			 * buffer - the output buffer does not guarantee that. So we
-			 * simply use a local Datum variable (which guarantees proper
-			 * alignment), and then copy the value from it.
+			 * assumes little endian behavior.  store_att_byval does almost
+			 * what we need, but it requires properly aligned buffer - the
+			 * output buffer does not guarantee that. So we simply use a local
+			 * Datum variable (which guarantees proper alignment), and then
+			 * copy the value from it.
 			 */
 			store_att_byval(&tmp, range->values[i], typlen);
 
@@ -771,7 +771,7 @@ range_deserialize(int maxvalues, SerializedRanges *serialized)
 	dataptr = NULL;
 	for (i = 0; (i < nvalues) && (!typbyval); i++)
 	{
-		if (typlen > 0)	/* fixed-length by-ref types */
+		if (typlen > 0)			/* fixed-length by-ref types */
 			datalen += MAXALIGN(typlen);
 		else if (typlen == -1)	/* varlena */
 		{
@@ -824,7 +824,8 @@ range_deserialize(int maxvalues, SerializedRanges *serialized)
 		}
 		else if (typlen == -2)	/* cstring */
 		{
-			Size	slen = strlen(ptr) + 1;
+			Size		slen = strlen(ptr) + 1;
+
 			range->values[i] = PointerGetDatum(dataptr);
 
 			memcpy(dataptr, ptr, slen);

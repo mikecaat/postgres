@@ -2499,9 +2499,9 @@ eval_const_expressions_mutator(Node *node,
 			}
 		case T_NullIfExpr:
 			{
-				NullIfExpr	   *expr;
-				ListCell	   *arg;
-				bool			has_nonconst_input = false;
+				NullIfExpr *expr;
+				ListCell   *arg;
+				bool		has_nonconst_input = false;
 
 				/* Copy the node and const-simplify its arguments */
 				expr = (NullIfExpr *) ece_generic_processing(node);

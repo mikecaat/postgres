@@ -13,12 +13,12 @@
 
 #include "datatype/timestamp.h"
 #include "portability/instr_time.h"
-#include "postmaster/pgarch.h" /* for MAX_XFN_CHARS */
+#include "postmaster/pgarch.h"	/* for MAX_XFN_CHARS */
 #include "utils/backend_progress.h" /* for backward compatibility */
-#include "utils/backend_status.h" /* for backward compatibility */
+#include "utils/backend_status.h"	/* for backward compatibility */
 #include "utils/hsearch.h"
 #include "utils/relcache.h"
-#include "utils/wait_event.h" /* for backward compatibility */
+#include "utils/wait_event.h"	/* for backward compatibility */
 
 
 /* ----------

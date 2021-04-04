@@ -112,7 +112,7 @@ find_inheritance_children(Oid parentrelId, bool include_detached,
 			!include_detached)
 		{
 			TransactionId xmin;
-			Snapshot snap;
+			Snapshot	snap;
 
 			xmin = HeapTupleHeaderGetXmin(inheritsTuple->t_data);
 			snap = GetActiveSnapshot();
@@ -521,7 +521,7 @@ DeleteInheritsTuple(Oid inhrelid, Oid inhparent, bool expect_detach_pending,
 		parent = ((Form_pg_inherits) GETSTRUCT(inheritsTuple))->inhparent;
 		if (!OidIsValid(inhparent) || parent == inhparent)
 		{
-			bool	detach_pending;
+			bool		detach_pending;
 
 			detach_pending =
 				((Form_pg_inherits) GETSTRUCT(inheritsTuple))->inhdetachpending;
@@ -583,7 +583,7 @@ PartitionHasPendingDetach(Oid partoid)
 
 	while (HeapTupleIsValid(inheritsTuple = systable_getnext(scan)))
 	{
-		bool	detached;
+		bool		detached;
 
 		detached =
 			((Form_pg_inherits) GETSTRUCT(inheritsTuple))->inhdetachpending;

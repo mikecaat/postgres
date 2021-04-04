@@ -999,7 +999,7 @@ lazy_scan_heap(Relation onerel, VacuumParams *params, LVRelStats *vacrelstats,
 		bool		all_visible_according_to_vm = false;
 		bool		all_visible;
 		bool		all_frozen = true;	/* provided all_visible is also true */
-		bool		has_dead_items;		/* includes existing LP_DEAD items */
+		bool		has_dead_items; /* includes existing LP_DEAD items */
 		TransactionId visibility_cutoff_xid = InvalidTransactionId;
 
 		/* see note above about forcing scanning of last page */

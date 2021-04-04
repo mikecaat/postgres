@@ -188,10 +188,10 @@ extern void sort_object_addresses(ObjectAddresses *addrs);
 
 extern void free_object_addresses(ObjectAddresses *addrs);
 
-typedef bool(*VisitDependenciesOfCB) (const ObjectAddress *otherObject,
-									  const char *version,
-									  char **new_version,
-									  void *data);
+typedef bool (*VisitDependenciesOfCB) (const ObjectAddress *otherObject,
+									   const char *version,
+									   char **new_version,
+									   void *data);
 
 extern void visitDependenciesOf(const ObjectAddress *object,
 								VisitDependenciesOfCB callback,

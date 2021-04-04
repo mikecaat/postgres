@@ -166,7 +166,7 @@ sub test_access
 
 	my $res =
 	  $node->psql('postgres', undef,
-				  extra_params => [ '-U', $role, '-c', 'SELECT 1' ]);
+		extra_params => [ '-U', $role, '-c', 'SELECT 1' ]);
 	is($res, $expected_res, $test_name);
 	return;
 }

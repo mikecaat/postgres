@@ -437,7 +437,7 @@ SocketBackend(StringInfo inBuf)
 	 * the type.
 	 */
 	if (pq_getmessage(inBuf, 0))
-		return EOF;			/* suitable message already logged */
+		return EOF;				/* suitable message already logged */
 	RESUME_CANCEL_INTERRUPTS();
 
 	return qtype;
@@ -1324,8 +1324,8 @@ exec_parse_message(const char *query_string,	/* string to execute */
 
 	ereport(DEBUG2,
 			(errmsg_internal("parse %s: %s",
-					*stmt_name ? stmt_name : "<unnamed>",
-					query_string)));
+							 *stmt_name ? stmt_name : "<unnamed>",
+							 query_string)));
 
 	/*
 	 * Start up a transaction command so we can run parse analysis etc. (Note
@@ -1580,8 +1580,8 @@ exec_bind_message(StringInfo input_message)
 
 	ereport(DEBUG2,
 			(errmsg_internal("bind %s to %s",
-					*portal_name ? portal_name : "<unnamed>",
-					*stmt_name ? stmt_name : "<unnamed>")));
+							 *portal_name ? portal_name : "<unnamed>",
+							 *stmt_name ? stmt_name : "<unnamed>")));
 
 	/* Find prepared statement */
 	if (stmt_name[0] != '\0')

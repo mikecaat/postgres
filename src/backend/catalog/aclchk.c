@@ -4537,7 +4537,7 @@ pg_attribute_aclcheck(Oid table_oid, AttrNumber attnum,
  */
 AclResult
 pg_attribute_aclcheck_ext(Oid table_oid, AttrNumber attnum,
-					  Oid roleid, AclMode mode, bool *is_missing)
+						  Oid roleid, AclMode mode, bool *is_missing)
 {
 	if (pg_attribute_aclmask_ext(table_oid, attnum, roleid, mode,
 								 ACLMASK_ANY, is_missing) != 0)

@@ -2644,7 +2644,7 @@ static struct config_int ConfigureNamesInt[] =
 			NULL
 		},
 		&vacuum_defer_cleanup_age,
-		0, 0, 1000000,		/* see ComputeXidHorizons */
+		0, 0, 1000000,			/* see ComputeXidHorizons */
 		NULL, NULL, NULL
 	},
 
@@ -3500,9 +3500,9 @@ static struct config_int ConfigureNamesInt[] =
 		0,
 #endif
 		0, 5,
-#else	/* not CLOBBER_CACHE_ENABLED */
+#else							/* not CLOBBER_CACHE_ENABLED */
 		0, 0, 0,
-#endif	/* not CLOBBER_CACHE_ENABLED */
+#endif							/* not CLOBBER_CACHE_ENABLED */
 		NULL, NULL, NULL
 	},
 

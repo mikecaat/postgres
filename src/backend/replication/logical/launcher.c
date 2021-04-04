@@ -71,7 +71,7 @@ typedef struct LogicalRepWorkerId
 {
 	Oid			subid;
 	Oid			relid;
-} LogicalRepWorkerId;
+}			LogicalRepWorkerId;
 
 static void ApplyLauncherWakeup(void);
 static void logicalrep_launcher_onexit(int code, Datum arg);
@@ -283,7 +283,7 @@ logicalrep_worker_launch(Oid dbid, Oid subid, const char *subname, Oid userid,
 
 	ereport(DEBUG1,
 			(errmsg_internal("starting logical replication worker for subscription \"%s\"",
-					subname)));
+							 subname)));
 
 	/* Report this after the initial starting message for consistency. */
 	if (max_replication_slots == 0)

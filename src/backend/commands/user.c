@@ -1501,8 +1501,8 @@ AddRoleMems(const char *rolename, Oid roleid,
 	 * situation-dependent member.  There's no technical need for this
 	 * restriction.  (One could lift it and take the further step of making
 	 * pg_database_ownercheck() equivalent to has_privs_of_role(roleid,
-	 * ROLE_DATABASE_OWNER), in which case explicit,
-	 * situation-independent members could act as the owner of any database.)
+	 * ROLE_DATABASE_OWNER), in which case explicit, situation-independent
+	 * members could act as the owner of any database.)
 	 */
 	if (roleid == ROLE_DATABASE_OWNER)
 		ereport(ERROR,

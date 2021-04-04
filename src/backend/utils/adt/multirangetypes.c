@@ -216,6 +216,7 @@ multirange_in(PG_FUNCTION_ARGS)
 						parse_state = MULTIRANGE_IN_RANGE_QUOTED;
 					else if (ch == '\\')
 						parse_state = MULTIRANGE_IN_RANGE_ESCAPED;
+
 					/*
 					 * We will include this character into range_str once we
 					 * find the end of the range value.
@@ -223,6 +224,7 @@ multirange_in(PG_FUNCTION_ARGS)
 				}
 				break;
 			case MULTIRANGE_IN_RANGE_ESCAPED:
+
 				/*
 				 * We will include this character into range_str once we find
 				 * the end of the range value.
@@ -242,8 +244,8 @@ multirange_in(PG_FUNCTION_ARGS)
 					parse_state = MULTIRANGE_IN_RANGE_QUOTED_ESCAPED;
 
 				/*
-				 * We will include this character into range_str once we
-				 * find the end of the range value.
+				 * We will include this character into range_str once we find
+				 * the end of the range value.
 				 */
 				break;
 			case MULTIRANGE_AFTER_RANGE:
@@ -259,6 +261,7 @@ multirange_in(PG_FUNCTION_ARGS)
 							 errdetail("Expected comma or end of multirange.")));
 				break;
 			case MULTIRANGE_IN_RANGE_QUOTED_ESCAPED:
+
 				/*
 				 * We will include this character into range_str once we find
 				 * the end of the range value.

@@ -563,8 +563,10 @@ sub backup
 
 	print "# Taking pg_basebackup $backup_name from node \"$name\"\n";
 	TestLib::system_or_bail(
-		'pg_basebackup', '-D', $backup_path, '-h',
-		$self->host,     '-p', $self->port,  '--checkpoint',
+		'pg_basebackup', '-D',
+		$backup_path,    '-h',
+		$self->host,     '-p',
+		$self->port,     '--checkpoint',
 		'fast',          '--no-sync',
 		@{ $params{backup_options} });
 	print "# Backup finished\n";
@@ -708,9 +710,10 @@ sub init_from_backup
 		TestLib::system_or_bail($params{tar_program}, 'xf',
 			$backup_path . '/base.tar',
 			'-C', $data_path);
-		TestLib::system_or_bail($params{tar_program}, 'xf',
-			$backup_path . '/pg_wal.tar',
-			'-C', $data_path . '/pg_wal');
+		TestLib::system_or_bail(
+			$params{tar_program},         'xf',
+			$backup_path . '/pg_wal.tar', '-C',
+			$data_path . '/pg_wal');
 	}
 	else
 	{
@@ -1219,7 +1222,7 @@ sub get_new_node
 # a common parent directory.
 sub _get_env
 {
-	my $self     = shift;
+	my $self = shift;
 	my %inst_env = (%ENV, PGHOST => $self->{_host}, PGPORT => $self->{_port});
 	# the remaining arguments are modifications to make to the environment
 	my %mods = (@_);

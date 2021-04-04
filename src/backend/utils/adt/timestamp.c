@@ -3991,8 +3991,8 @@ timestamptz_bin(PG_FUNCTION_ARGS)
 {
 	Interval   *stride = PG_GETARG_INTERVAL_P(0);
 	TimestampTz timestamp = PG_GETARG_TIMESTAMPTZ(1);
-	TimestampTz	origin = PG_GETARG_TIMESTAMPTZ(2);
-	TimestampTz	result,
+	TimestampTz origin = PG_GETARG_TIMESTAMPTZ(2);
+	TimestampTz result,
 				stride_usecs,
 				tm_diff,
 				tm_delta;

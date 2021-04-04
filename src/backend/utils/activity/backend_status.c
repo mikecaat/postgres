@@ -16,13 +16,13 @@
 #include "miscadmin.h"
 #include "pg_trace.h"
 #include "pgstat.h"
-#include "port/atomics.h" /* for memory barriers */
+#include "port/atomics.h"		/* for memory barriers */
 #include "storage/ipc.h"
-#include "storage/proc.h" /* for MyProc */
+#include "storage/proc.h"		/* for MyProc */
 #include "storage/sinvaladt.h"
 #include "utils/ascii.h"
 #include "utils/backend_status.h"
-#include "utils/guc.h" /* for application_name */
+#include "utils/guc.h"			/* for application_name */
 #include "utils/memutils.h"
 
 
@@ -497,8 +497,8 @@ pgstat_setup_backend_status_context(void)
 {
 	if (!backendStatusSnapContext)
 		backendStatusSnapContext = AllocSetContextCreate(TopMemoryContext,
-													 "Backend Status Snapshot",
-													 ALLOCSET_SMALL_SIZES);
+														 "Backend Status Snapshot",
+														 ALLOCSET_SMALL_SIZES);
 }
 
 

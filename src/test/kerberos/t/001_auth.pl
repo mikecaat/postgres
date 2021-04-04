@@ -76,8 +76,8 @@ my $kdc_datadir = "${TestLib::tmp_check}/krb5kdc";
 my $kdc_pidfile = "${TestLib::tmp_check}/krb5kdc.pid";
 my $keytab      = "${TestLib::tmp_check}/krb5.keytab";
 
-my $dbname = 'postgres';
-my $username = 'test1';
+my $dbname      = 'postgres';
+my $username    = 'test1';
 my $application = '001_auth.pl';
 
 note "setting up Kerberos";
@@ -182,7 +182,9 @@ note "running tests";
 # Test connection success or failure, and if success, that query returns true.
 sub test_access
 {
-	my ($node, $role, $query, $expected_res, $gssencmode, $test_name, $expect_log_msg) = @_;
+	my ($node, $role, $query, $expected_res, $gssencmode, $test_name,
+		$expect_log_msg)
+	  = @_;
 
 	# need to connect over TCP/IP for Kerberos
 	my ($res, $stdoutres, $stderrres) = $node->psql(
@@ -212,7 +214,7 @@ sub test_access
 		my $first_logfile = slurp_file($node->logfile);
 
 		like($first_logfile, qr/\Q$expect_log_msg\E/,
-			 'found expected log file content');
+			'found expected log file content');
 	}
 
 	# Clean up any existing contents in the node's log file so as
@@ -253,7 +255,8 @@ test_access($node, 'test1', 'SELECT true', 2, '', 'fails without ticket', '');
 
 run_log [ $kinit, 'test1' ], \$test1_password or BAIL_OUT($?);
 
-test_access($node, 'test1', 'SELECT true', 2, '', 'fails without mapping', '');
+test_access($node, 'test1', 'SELECT true', 2, '', 'fails without mapping',
+	'');
 
 $node->append_conf('pg_ident.conf', qq{mymap  /^(.*)\@$realm\$  \\1});
 $node->restart;

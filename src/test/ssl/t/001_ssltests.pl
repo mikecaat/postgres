@@ -38,8 +38,8 @@ my $common_connstr;
 # This changes ssl/client.key to ssl/client_tmp.key etc for the rest
 # of the tests.
 my @keys = (
-	"client",     "client-revoked",
-	"client-der", "client-encrypted-pem",
+	"client",               "client-revoked",
+	"client-der",           "client-encrypted-pem",
 	"client-encrypted-der", "client-dn");
 foreach my $key (@keys)
 {
@@ -536,16 +536,19 @@ $node->connect_ok(
 	"intermediate client certificate is provided by client");
 $node->connect_fails(
 	$common_connstr . " " . "sslmode=require sslcert=ssl/client.crt",
-	qr/SSL error: tlsv1 alert unknown ca/, "intermediate client certificate is missing");
+	qr/SSL error: tlsv1 alert unknown ca/,
+	"intermediate client certificate is missing");
 
 # test server-side CRL directory
-switch_server_cert($node, 'server-cn-only', undef, undef, 'root+client-crldir');
+switch_server_cert($node, 'server-cn-only', undef, undef,
+	'root+client-crldir');
 
 # revoked client cert
 $node->connect_fails(
 	"$common_connstr user=ssltestuser sslcert=ssl/client-revoked.crt sslkey=ssl/client-revoked_tmp.key",
 	qr/SSL error: sslv3 alert certificate revoked/,
-	"certificate authorization fails with revoked client cert with server-side CRL directory");
+	"certificate authorization fails with revoked client cert with server-side CRL directory"
+);
 
 # clean up
 foreach my $key (@keys)

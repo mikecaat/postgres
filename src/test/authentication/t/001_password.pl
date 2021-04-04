@@ -48,7 +48,8 @@ sub test_role
 
 	local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-	my $res = $node->psql('postgres', undef, extra_params => [ '-U', $role, '-w' ]);
+	my $res =
+	  $node->psql('postgres', undef, extra_params => [ '-U', $role, '-w' ]);
 	is($res, $expected_res,
 		"authentication $status_string for method $method, role $role");
 	return;
@@ -108,7 +109,8 @@ delete $ENV{"PGCHANNELBINDING"};
 $ENV{"PGPASSFILE"} = $pgpassfile;
 
 unlink($pgpassfile);
-append_to_file($pgpassfile, qq!
+append_to_file(
+	$pgpassfile, qq!
 # This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file. This very long comment is just here to exercise handling of long lines in the file.
 *:*:postgres:scram_role:pass:this is not part of the password.
 !);
@@ -118,8 +120,9 @@ reset_pg_hba($node, 'password');
 test_role($node, 'scram_role', 'password from pgpass', 0);
 test_role($node, 'md5_role',   'password from pgpass', 2);
 
-append_to_file($pgpassfile, qq!
+append_to_file(
+	$pgpassfile, qq!
 *:*:*:md5_role:p\\ass
 !);
 
-test_role($node, 'md5_role',   'password from pgpass', 0);
+test_role($node, 'md5_role', 'password from pgpass', 0);

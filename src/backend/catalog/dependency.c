@@ -1199,7 +1199,7 @@ reportDependentObjects(const ObjectAddresses *targetObjects,
 			 */
 			ereport(DEBUG2,
 					(errmsg_internal("drop auto-cascades to %s",
-							objDesc)));
+									 objDesc)));
 		}
 		else if (behavior == DROP_RESTRICT)
 		{
